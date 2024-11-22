@@ -19,6 +19,7 @@ class AppTheme{
 
       )
     ),
+    scaffoldBackgroundColor: Colors.transparent,
 
 
   );

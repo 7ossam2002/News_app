@@ -8,7 +8,7 @@ class RoutesManager{
 
   static Map<String,WidgetBuilder> routes={
     splash :(_)=>const SplashScreen(),
-    home:(_)=>const HomeScreen(),
+    home:(_)=> HomeScreen(),
   };
 
 }
