@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:news_app/config/theme/app_style.dart';
 import 'package:news_app/core/utils/colors_manager.dart';
 import 'package:news_app/core/utils/strings_manager.dart';
-import 'package:news_app/presentation/screens/home/tabs/categories_tab/categories_tab.dart';
+
 
 typedef OnDrawerItemClicked =void Function(MenuItem);
 

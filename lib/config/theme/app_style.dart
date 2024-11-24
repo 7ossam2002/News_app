@@ -9,4 +9,5 @@ class AppStyle{
   static TextStyle drawerTitle=  GoogleFonts.aboreto(fontWeight: FontWeight.w700,fontSize: 35.sp,color: ColorsManager.white);
   static TextStyle drawerItem=  GoogleFonts.aBeeZee(fontWeight: FontWeight.w700,fontSize: 22.sp,color: ColorsManager.black);
   static TextStyle pickCategory=  GoogleFonts.aBeeZee(fontWeight: FontWeight.w700,fontSize: 25.sp,color: ColorsManager.black);
+  static TextStyle categoryTitle=  GoogleFonts.aBeeZee(fontWeight: FontWeight.w700,fontSize: 15.sp,color: ColorsManager.white);
 }
