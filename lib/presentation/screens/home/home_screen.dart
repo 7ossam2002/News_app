@@ -36,6 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
   // Handles drawer item clicks
   void _onDrawerItemClicked(MenuItem item) {
+
     setState(() {
       switch (item) {
         case MenuItem.categories:
