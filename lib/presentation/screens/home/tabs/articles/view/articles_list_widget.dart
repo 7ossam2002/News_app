@@ -5,6 +5,8 @@ import 'package:news_app/data/api/model/articles_response/Articles.dart';
 import 'package:news_app/data/api/model/sources_response/Sources.dart';
 import 'package:news_app/presentation/screens/home/tabs/articles/view_model/articles_viewModel.dart';
 import 'package:news_app/presentation/screens/home/tabs/articles/widget/articles_item.dart';
+import 'package:news_app/presentation/widget/ui_error.dart';
+import 'package:news_app/presentation/widget/ui_loading.dart';
 
 import 'package:provider/provider.dart';
 
@@ -39,22 +41,40 @@ class _ArticlesListWidgetState extends State<ArticlesListWidget> {
     return ChangeNotifierProvider<ArticlesViewModel>.value(
         value: viewModel,
     child: Consumer<ArticlesViewModel>(
-      builder: (context, value, child) {
-        if(viewModel.isLoading){
-          return const Center(child: CircularProgressIndicator());
-        }
+      builder: (context, viewModel, child) {
+     var state= viewModel.state;
+     switch(state){
 
-        if(viewModel.errorMessage !=null){
-          return Text(viewModel.errorMessage!);
-        }
-        List<Articles> articles=viewModel.articles!;
-        return SizedBox(
-                  height: 721,
-                  child: ListView.builder(
-                    itemBuilder: (context, index) => ArticlesItemWidget(article: articles[index]),
-                    itemCount: articles.length,
-                  ),
-                );
+       case ArticlesSuccessState():
+         return SizedBox(
+             height: 719.h,
+             child: ListView.builder(itemBuilder: (context, index) => ArticlesItemWidget(article: state.articles[index]),itemCount: state.articles.length,));
+
+       case ArticlesErrorState():
+         return UiError(serverError: state.serverError,error: state.error,);
+
+       case ArticlesLoadingState():
+         return  const UiLoading(loadingMessage: 'loading...',);
+
+     }
+
+      }
+      // {
+      //   if(viewModel.isLoading){
+      //     return const Center(child: CircularProgressIndicator());
+      //   }
+      //
+      //   if(viewModel.errorMessage !=null){
+      //     return Text(viewModel.errorMessage!);
+      //   }
+      //   List<Articles> articles=viewModel.articles!;
+      //   return SizedBox(
+      //             height: 721,
+      //             child: ListView.builder(
+      //               itemBuilder: (context, index) => ArticlesItemWidget(article: articles[index]),
+      //               itemCount: articles.length,
+      //             ),
+      //           );
 
         //   Expanded(
         //   child: ListView.builder(
@@ -62,7 +82,7 @@ class _ArticlesListWidgetState extends State<ArticlesListWidget> {
         //     itemCount: articles.length,
         //   ),
         // );
-      },
+
     ),
     );
       // FutureBuilder(

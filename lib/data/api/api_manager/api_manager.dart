@@ -30,21 +30,29 @@ class ApiManager {
    return ServerError(message: sourcesResponse.message!, code: sourcesResponse.code!);
   }
       //return sourcesResponse;
-    }catch(e){
-      return Error(exception: Exception(e));
+    }on Exception catch(e){
+      return Error(exception: e);
     }
   }
 
 
-  static Future<ArticlesResponse> getArticles(String sourceId) async {
+  static Future<Result<List<Articles>>> getArticles(String sourceId) async {
     Uri url = Uri.https(_baseUrl, _articlesEndPoint, {
       'apiKey': _apiKey,
       'sources': sourceId,
       //'q':searchText,
     });
-    http.Response serverResponse = await http.get(url);
-    var json = jsonDecode(serverResponse.body);
-    ArticlesResponse articleResponse = ArticlesResponse.fromJson(json);
-    return articleResponse;
+    try{
+      http.Response serverResponse = await http.get(url);
+      var json = jsonDecode(serverResponse.body);
+      ArticlesResponse articleResponse = ArticlesResponse.fromJson(json);
+      if(articleResponse.status=='ok') {
+        return Success(data: articleResponse.articles!);
+      }else{
+        return ServerError(message: articleResponse.message!, code: articleResponse.code!);
+      }
+    }on Exception catch(e){
+       return Error(exception: e);
+    }
   }
 }
