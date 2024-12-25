@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:news_app/presentation/widget/ui_error.dart';
@@ -13,8 +15,10 @@ class UiError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(extractError()),
+        Text(extractError(),textAlign: TextAlign.center,),
 
         SizedBox(height: 4.h,),
 
@@ -30,12 +34,33 @@ class UiError extends StatelessWidget {
   }
 
    String extractError(){
+     String? message= "Something went wrong";
      if(serverError?.message!=null){
        return serverError!.message;
      }
      if(error?.exception!=null){
-       return error!.exception.toString();
+       var ex= error!.exception;
+
+       switch(ex){
+         case SocketException():
+           {
+             message = "No Internet connection";
+             break;
+           }
+         case  HttpException():
+           {
+             message= "Couldn't find the post ";
+             break;
+           }
+         case  FormatException():
+           {
+             message="Bad response format";
+             break;
+           }
+
+       }
      }
-     return 'Something went wrong';
+     return message;
    }
+
 }
